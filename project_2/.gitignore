@@ -27,14 +27,14 @@ db.sqlite3
 *.pyc
 
 # Compiled Javascript files
-*.js
-*.jsx
+# *.js
+# *.jsx
 
 # Mac specific files
 .DS_Store
 
 # Compiled CSS
-*.css
+# *.css
 
 # Environment files
 .env
