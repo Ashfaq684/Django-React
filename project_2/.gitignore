@@ -1,0 +1,49 @@
+# Django related files
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+db.sqlite3
+
+# React related files
+/node_modules
+/build
+/.env
+
+# IDE/Editor specific files
+.vscode/
+*.swp
+*.swo
+*.swn
+*.swm
+*.swl
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Compiled Python files
+*.pyc
+
+# Compiled Javascript files
+*.js
+*.jsx
+
+# Mac specific files
+.DS_Store
+
+# Compiled CSS
+*.css
+
+# Environment files
+.env
+
+# Logs and other generated files
+log/
+logs/
+*.log
+*.tmp
+
+# Dependency directories
+env/
