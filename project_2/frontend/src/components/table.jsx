@@ -8,6 +8,8 @@ function Table({todos, setTodos, isLoading}) {
     'body': ''
   })
 
+  const [editingId, setEditingId] = useState(null);
+
   const handleDelete = async (id) => {
     try {
       await axios.delete(`http://127.0.0.1:8000/api/todo/${id}/`)
@@ -42,28 +44,31 @@ function Table({todos, setTodos, isLoading}) {
   }
 
   const handleClick = () => {
-    handleEdit(editText.id, editText)
-    setEditText({ 
-      'body': '' 
-    })
-  }
+    handleEdit(editingId, editText);
+    setEditText({ 'body': '' });
+    setEditingId(null);
+  };
 
   return (
     <div className='py-2'>
       <table className='w-11/12 max-w-4xl'>
         <thead className='border-b-2 border-black'>
           <tr>
-            <th className='p-3 text-sm font-semibold tracking-wide text-left'>Checkbox</th>
-            <th className='p-3 text-sm font-semibold tracking-wide text-left'>To Do</th>
-            <th className='p-3 text-sm font-semibold tracking-wide text-left'>Status</th>
-            <th className='p-3 text-sm font-semibold tracking-wide text-left'>Data Created</th>
-            <th className='p-3 text-sm font-semibold tracking-wide text-left'>Actions</th>
+            <th className='p-3 text-lg font-semibold tracking-wide text-left'>Checkbox</th>
+            <th className='p-3 text-lg font-semibold tracking-wide text-left'>To Do</th>
+            <th className='p-3 text-lg font-semibold tracking-wide text-center'>Status</th>
+            <th className='p-3 text-lg font-semibold tracking-wide text-left'>Creation Date</th>
+            <th className='p-3 text-lg font-semibold tracking-wide text-center'>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {isLoading ? <div>Is Loading</div> :
-            <>
-              {todos.map((todoItem, index) => {
+          {isLoading ? (
+              <tr>
+                <td colSpan="5" className="p-3 text-center">Is Loading</td>
+              </tr>
+            ) : (
+              <>
+              {todos.map((todoItem) => {
                 return (
                   <tr key={todoItem.id} className='border-b border-black'>
                     <td className='p-3' title={todoItem.id}>
@@ -77,17 +82,18 @@ function Table({todos, setTodos, isLoading}) {
                     <td className='p-3 text-sm'>{new Date(todoItem.created_at).toLocaleString()}</td>
                     <td className='p-3 text-sm font-medium grid grid-flow-col items-center mt-5'>
                       <span className='text-xl cursor-pointer'>
-                        <label htmlFor="my_modal_6" className="btn">
-                          <MdEditNote onClick={() => setEditText(todoItem)} />
+                        <label htmlFor="my_modal_6" className="btn" onClick={() => { setEditText(todoItem); setEditingId(todoItem.id); }}>
+                          <MdEditNote />
                         </label>
                       </span>
                       <span className='text-xl cursor-pointer'><MdOutlineDeleteOutline onClick={() => handleDelete(todoItem.id)} /></span>
                     </td>
                   </tr>
                 )
-              })
-              }
-            </>
+              })}
+              </>
+            )
+            
           }
         </tbody>
       </table>
